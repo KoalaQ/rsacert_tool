@@ -149,7 +149,7 @@ public class SignatureUtils {
     }
     public static String signature(String text,String filePath, String storePwd, String keyPwd) throws Exception {
         PrivateKey privateKey=getPrivateKeyFromAbsolutePath(filePath,storePwd,keyPwd);
-        return bytesToHex(signature(text.getBytes(), privateKey, SIGN_ALGORITHMS_SHA256WithRSA));
+        return bytesToHex(signature(text.getBytes("utf-8"), privateKey, SIGN_ALGORITHMS_SHA256WithRSA));
     }
     /**
      * @param text：原文
@@ -177,7 +177,7 @@ public class SignatureUtils {
     }
     public static boolean verify(String text, String signature,String filePath) throws Exception {
         PublicKey publicKey=getPublicKeyFromAbsolutePath(filePath);
-        return verify(text.getBytes(), hexToBytes(signature), publicKey, SIGN_ALGORITHMS_SHA256WithRSA);
+        return verify(text.getBytes("utf-8"), hexToBytes(signature), publicKey, SIGN_ALGORITHMS_SHA256WithRSA);
     }
     /**
      * 根据文件获取私钥
