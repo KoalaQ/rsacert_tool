@@ -40,6 +40,7 @@ public class SignTest extends BaseJPanel   implements ActionListener {
     private JTextArea testArea=new JTextArea("测试串！！1123",5, 62);
     private JLabel signAreaLabel=new JLabel("签名串：");
     private JTextArea signArea=new JTextArea("这是签名符串",6, 62);
+    private JTextArea privateKeyArea=new JTextArea("这是私钥base64编码后字符串",6, 62);
     private JLabel verifyLabel=new JLabel("验签结果：");
     private JTextField verifyField = new JTextField("这是签名结果",20);
 
@@ -66,11 +67,11 @@ public class SignTest extends BaseJPanel   implements ActionListener {
         testArea.setEditable(true);
         //signArea.setPreferredSize(new Dimension(670, 50));
         signArea.setLineWrap(true);
-
+        privateKeyArea.setLineWrap(true);
         JPanel jp=new JPanel();
         jp.setLayout(new BorderLayout(5,5));
         JPanel jp1=new JPanel();
-        jp1.setPreferredSize(new Dimension(0, 250));
+        jp1.setPreferredSize(new Dimension(0, 300));
         JPanel jp2=new JPanel();
         jp2.setPreferredSize(new Dimension(400,0 ));
         JPanel jp3=new JPanel();
@@ -84,6 +85,8 @@ public class SignTest extends BaseJPanel   implements ActionListener {
         jp1.add(new JScrollPane(testArea));
         jp1.add(signAreaLabel);
         jp1.add(new JScrollPane(signArea));
+        jp1.add(new JLabel("私钥base64"));
+        jp1.add(new JScrollPane(privateKeyArea));
         jp1.add(verifyLabel);
         jp1.add(verifyField);
 
@@ -173,12 +176,15 @@ public class SignTest extends BaseJPanel   implements ActionListener {
         }
         //endregion
         String singstr= null;
+        String prikey="";
         try {
+             prikey= SignatureUtils.getBase64PrivateKey(testAreastr,filepripathstr,pristorepwdFieldstr,prikeypwdFieldstr);
             singstr = SignatureUtils.signature(testAreastr,filepripathstr,pristorepwdFieldstr,prikeypwdFieldstr);
         } catch (Exception e) {
             showWarningMsg("签名异常："+e.getMessage());
         }
         signArea.setText(singstr);
+        privateKeyArea.setText(prikey);
     }
     private void verify(){
         String filepubpathstr=filepubpath.getText();

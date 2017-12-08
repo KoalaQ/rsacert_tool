@@ -141,6 +141,10 @@ public class SignatureUtils {
         result = sign.sign();
         return result;
     }
+    public static String getBase64PrivateKey(String text,String filePath, String storePwd, String keyPwd) throws Exception {
+        PrivateKey privateKey=getPrivateKeyFromAbsolutePath(filePath,storePwd,keyPwd);
+        return  BASE64Util.encryptBASE64(privateKey.getEncoded());
+    }
     public static byte[] signature(byte[] text, PrivateKey privateKey) throws Exception {
         return signature(text, privateKey, SIGN_ALGORITHMS_SHA256WithRSA);
     }
