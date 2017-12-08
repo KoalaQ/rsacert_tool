@@ -27,11 +27,11 @@ public class MainFrame extends JFrame {
         //endregion
 
         //region frame基础设置
-        setSize(800,530);
+        setSize(800,580);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        setResizable(false);
+        //setResizable(false);
         //endregion
 
     }

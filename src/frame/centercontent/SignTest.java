@@ -5,6 +5,7 @@ package frame.centercontent;
 import frame.BaseJPanel;
 import frame.factory.ColorFactory;
 import frame.listener.MyActionListener;
+import util.RSAEncryptUtil;
 import util.SignatureUtils;
 import util.StringUtils;
 
@@ -14,6 +15,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.security.PrivateKey;
+
+import static util.SignatureUtils.SIGN_ALGORITHMS_SHA256WithRSA;
 
 /**
  * Created by lyd on 2017/5/11.
@@ -71,7 +75,7 @@ public class SignTest extends BaseJPanel   implements ActionListener {
         JPanel jp=new JPanel();
         jp.setLayout(new BorderLayout(5,5));
         JPanel jp1=new JPanel();
-        jp1.setPreferredSize(new Dimension(0, 300));
+        jp1.setPreferredSize(new Dimension(0, 350));
         JPanel jp2=new JPanel();
         jp2.setPreferredSize(new Dimension(400,0 ));
         JPanel jp3=new JPanel();
@@ -180,6 +184,9 @@ public class SignTest extends BaseJPanel   implements ActionListener {
         try {
              prikey= SignatureUtils.getBase64PrivateKey(testAreastr,filepripathstr,pristorepwdFieldstr,prikeypwdFieldstr);
             singstr = SignatureUtils.signature(testAreastr,filepripathstr,pristorepwdFieldstr,prikeypwdFieldstr);
+            PrivateKey privateKey=RSAEncryptUtil.loadBase64PrivateKeyByStr(prikey);
+            //String singstr2=SignatureUtils.bytesToHex(SignatureUtils.signature(testAreastr.getBytes("utf-8"), privateKey, SIGN_ALGORITHMS_SHA256WithRSA));
+            //System.out.println(singstr.equals(singstr2));
         } catch (Exception e) {
             showWarningMsg("签名异常："+e.getMessage());
         }
