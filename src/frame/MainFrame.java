@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         //endregion
 
         //region frame基础设置
-        setSize(800,480);
+        setSize(800,530);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
